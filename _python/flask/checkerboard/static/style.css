@@ -1,0 +1,23 @@
+    body {
+        background:#333;
+    }
+
+    #board {
+        width:640px;
+        margin: 100px auto;
+        background: #efefef;
+        height:640px;
+    }
+
+    #board .cell{
+        margin:0;
+        padding:0;
+        width:75px;
+        height:75px;
+        display: inline-block;
+        background: #fff;
+    }
+
+    #board .cell.dark{
+        background:#999;
+    }

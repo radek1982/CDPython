@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'style.css') }} ">
+    <title>Checkerboard</title>
+</head>
+<body>
+    <div id="board" style="height: {{(rows)*80}}px; width: {{cols*80}}px">
+        {% for r in range(1,rows+1) %}
+        {% for c in range(1,cols+1) %}
+        
+
+        {% if  r % 2 == 0 and c  % 2 != 0  %}
+        <a href="#" class="cell dark" style="background: {{dark}}"></a>
+        {% elif r % 2 !=0 and c %2 ==0 %}
+        <a href="#" class="cell dark" style="background: {{dark}}"></a>
+        {%else%}
+        <a href="#" class="cell" style="background: {{light}}"></a> 
+        {% endif %}
+        
+
+        {% endfor %}
+        {%endfor%}
+    </div>
+</body>
+</html>
