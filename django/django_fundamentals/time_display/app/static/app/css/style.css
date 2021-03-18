@@ -1,0 +1,30 @@
+body {
+    background: #333;
+}
+
+#wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height:600px;
+   
+}
+
+.box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size:2em;
+    margin:20px;
+    padding:10px;
+    align-items: center;
+    text-align: center;
+    background:#efefef;
+    border-radius: 20px;
+}
+
+.box p {
+    width:200px;
+    margin:10px;
+}
