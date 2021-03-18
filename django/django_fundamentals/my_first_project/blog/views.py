@@ -15,4 +15,6 @@ def new(req):
 
 def create(req):
     return redirect("/")
-    
+
+def show(req, blog_id):
+    return HttpResponse("showing blog id " + str(blog_id)) 
