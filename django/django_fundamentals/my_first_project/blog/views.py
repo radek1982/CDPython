@@ -18,3 +18,8 @@ def create(req):
 
 def show(req, blog_id):
     return HttpResponse("showing blog id " + str(blog_id)) 
+def edit(req, blog_id):
+    return HttpResponse("edit blog id " + str(blog_id)) 
+
+def destroy(req, blog_id):
+    return HttpResponse("delete blog id " + str(blog_id)) 
