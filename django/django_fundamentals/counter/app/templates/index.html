@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counter</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'app/style.css'%}"> 
+</head>
+<body>
+    <div id="wrapper">
+    
+        <div class="counter">
+            <p class="value">{{counter}}</p>
+            <a href="/reset-session">Reset Session</a>
+        </div>
+        <form action="/increment" method="POST">
+            {% csrf_token %} 
+            <input type="range" min="1" max="10" name="inc" value="{{inc}}">
+            <input type="submit" value="increment"> 
+        </form>
+        
+    </div>
+   
+</body>
+</html>
