@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from random import randint
 from time import gmtime,strftime
 
@@ -9,29 +9,56 @@ casino = {"id": 4, "location": "Casino", "description": "(Earns/Looses 0-50 Gold
 
 quests = [farm,cave,house,casino]
 def index(req):
-    log = req.session['log'] if 'log' in req.session else []
-    return render(req, "index.html", {"quest_list": quest_list(), "log": log})
+    return render(req, "index.html", {"gold":adjust_gold(req), "quests": quests, "log": log(req)})
 
-def quest_list(): 
-
-    rendered = []
-    for q in quests:
-      loc = q['location']
-      id = q['id']
-      link = f"/take/{id}"
-      rendered.append(f"<li class='quest'><div class='details'> <h2>{loc}</h2> <p> {q['description']} <a href='{link}'>Find gold! </a> </p> </div></li>")
-    return "\n".join(rendered)
-def take(req, quest_id): 
-   q =  quests[quest_id]
+def process_money(req): 
+  
+   quest_id= int(req.POST.get('quest_id',0))
+   q =  quests[quest_id -1 ]
    gold = randint(q["min"], q["max"])
-   time  = strftime("%Y/%m/%d %h:%i:%s %p", gmtime())
+   adjust_gold(req, gold)
    outcome = "good" if gold > 0 else "bad"
    location = q["location"].lower()
 
-   log = req.session['log'] if 'log' in reg.session else []
-   msg = f"<p class='good'>Earned {gold} from {location}! ({time}) </p>" if outcome  == "good" else f"<p class='bad'> Entered a {location} and lost {gold} gold. </p>"
+   log_msg(req, outcome, gold, location)
+  
+   return redirect("/")
 
-   log.append(msg)
-   req.session['log'] = log
+def log_msg(req,outcome, gold, location):
+ 
+   l= log(req)
 
-   return render(req, "index.html", {"quests": quests, "log": log})
+
+   time  = strftime("%m/%d/%Y, %H:%M:%S %p", gmtime())
+   msg = f"Earned {currency(abs(gold))} from {location}!" if outcome  == "good" else f"Entered a {location} and lost {currency(abs(gold))} gold!"
+
+   m = {"outcome": outcome, "location": location, "msg": msg, "time": time}
+ 
+   l.append(m)
+   req.session['log'] = l
+
+   return log
+def log(req):
+  return req.session['log'] if 'log' in req.session else []
+
+def adjust_gold(req, amount = 0):
+  gold =  float(req.session['gold']) + amount if 'gold' in req.session else 0.0
+  req.session['gold'] = gold
+  return currency(gold)
+
+def reset(req):
+    if 'log' in req.session: del req.session['log']
+    if 'gold' in req.session: del req.session['gold']
+
+    return redirect("/")
+
+def currency(amount):
+  return f"${amount:.2f}"
+
+def abs(amount): 
+    return amount*-1 if amount<0 else amount
+
+
+
+
+  

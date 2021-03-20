@@ -1,16 +1,67 @@
+* {
+    margin:0;
+    padding:0;  
+}
 #wrapper {
     display: flex;
+    align-items: center;
     flex-direction: column;
+    padding:20px;
 }
 
 #goldCounter {
+    align-self: flex-start;
 
 }
-#wrapper #quests {
 
+#quests {
+    align-self: flex-start;
     display: flex;
+    margin:50px 0px;
+}
+#quests .quest {
+    margin: 0 50px;
+    width:200px;
 }
 
-#quests .quest .detail {
-    width:200px;
+.good {
+    color: green
+}
+
+.bad {
+    color: red;
+}
+
+.box {
+    border: 2px solid black;
+    text-align: center;
+}
+
+#log {
+    align-self:flex-start;
+    width:100%;
+    flex-direction: column;
+    max-height:200px;
+    list-style: none;
+    overflow-y:scroll;
+}
+
+#log ul {
+    border:2px solid black;
+}
+#log ul li {
+    margin:10px;
+}
+.box {
+    padding:10px;
+}
+.box p {
+    margin:10px;
+}
+.box p a {
+    display: block;
+}
+
+#quests {
+    list-style: none;
 }

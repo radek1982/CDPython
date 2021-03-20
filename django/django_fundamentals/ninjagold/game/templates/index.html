@@ -11,14 +11,26 @@
 <body>
     <div id="wrapper">
 
-        <div id="goldCounter"> Your Gold: </div>
+        <div id="goldCounter"> Your Gold: <span class="box">{{ gold }}</span> <a href="/reset">Play again</a> </div>
         <ul id="quests">
+            {% for q in quests %}
 
-            {{quest_list | safe}}
-         </ul>
+            
+            <li class="box quest">
+                {%csrf_token%}
+                <form class="detail" action="/process_money" method="POST"> {% csrf_token %} <input type="hidden" name="quest_id" value="{{q.id}}">
+                <h2> {{q.location}} </h2> <p>{{q.description}}</p><input type="submit" name="" value="Find Gold!">  </form></li>
+            {%endfor%}
+        </ul>
 
-        <ul id="log">
-            <li class="entry"> Earned foo in q</li>
+        <div id="log">
+            
+             <p> Activities:</p>
+            <ul>
+                {% for l in log %}
+                <li class="entry {{l.outcome}} ">{{l.msg}} ({{l.time}}) </li>
+                {%endfor%}
+            </ul>
         </div>
     </div>
     
