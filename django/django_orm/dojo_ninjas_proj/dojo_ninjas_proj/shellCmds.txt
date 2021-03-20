@@ -1,0 +1,50 @@
+from dojo_ninjas_app.models import *
+#CREATE
+Dojo.create(name = "Dojo 1")
+Dojo.create(name = "Dojo 2")
+Dojo.create(name = "Dojo 3")
+
+#DELETE ALL
+
+[d.delete() for d in Dojo.objects.all()]
+
+#CREATE AGAIN
+[Dojo.objects.create(name=f"Dojo {x}") for x in range(4)]
+
+#CREATE 3 ninjas for first Dojo
+
+
+Ninja.objects.create(first_name="Dojo1" last_name="One", dojo=Dojo.objects.first())
+
+Ninja.objects.create(first_name="Dojo1" last_name="Two", dojo=Dojo.objects.first())
+
+Ninja.objects.create(first_name="Dojo1" last_name="Three", dojo=Dojo.objects.first())
+#Second dojo
+d2 = Dojo.objects.get(id=4)
+Ninja.objects.create(first_name="Dojo2" last_name="One", dojo=d2)
+
+Ninja.objects.create(first_name="Dojo2" last_name="Two", dojo=d2)
+
+Ninja.objects.create(first_name="Dojo2" last_name="Three", dojo=d2)
+
+d3 = Dojo.objects.last()
+Ninja.objects.create(first_name="Dojo3" last_name="One", dojo=d3
+
+Ninja.objects.create(first_name="Dojo3" last_name="Two", dojo=d3)
+
+Ninja.objects.create(first_name="Dojo3" last_name="Three", dojo=d3)
+
+#Retrieve all the ninjas from first
+
+ Dojo.objects.first().ninjas.all()
+
+#Retrieve fom last
+
+Dojo.objects.last().ninjas.all()
+
+#Last ninjas dojo
+
+Ninja.objects.last().dojo
+
+#new dojo
+Dojo.objects.create(name="new", desc="new dojo")
