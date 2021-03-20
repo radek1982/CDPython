@@ -12,6 +12,5 @@ User.objects.get(id=2).delete()
 u = User.objects.get(id=3)
 u.last_name="Pancakes"
 u.save()
-User.
 User.objects.all().order_by("first_name")
 User.objects.all().order_by("-first_name")
