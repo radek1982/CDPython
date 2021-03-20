@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Dojo Ninjas</title>
+</head>
+<body>
+
+<div class="row">
+    <form class="col-5" method="POST" action="/add_dojo">
+        <h2> Dojo</h2>
+        {%csrf_token%}
+        <div class="form-group">
+        <label for="name"> Name: </label>
+        <input type="text" class="form-control" name ="name">
+        </div>
+    
+        <div class="form-group">
+        <label for="city"> City: </label>
+        <input type="text" class="form-control"
+        name = "city" id="city">
+        </div>
+    
+        <div class="form-group">
+            <label for="state"> State: </label>
+            <input type="text" class="form-control"
+            name = "state" id="state">
+            </div>
+
+            <div class="form-row"><input type="submit" name="add_dojo" class="btn btn-success" value="Add Dojo"></div>
+    </form>
+    <form class="col-5" method="POST" action="/add_ninja">
+        {%csrf_token%}
+        <h2>Ninja</h2>
+        <div class="form-group">
+            <label for="first_name"> First Name: </label>
+            <input type="text" class="form-control"
+            name = "first_name" id="first_name">
+            </div>
+    
+            <div class="form-group">
+                <label for="last_name"> Last Name: </label>
+                <input type="text" class="form-control"
+                name = "last_name" id="last_name">
+                </div>
+                <div class="form-group">
+                    <label for="dojo"> Dojo: </label>
+                    <select  class="form-control"
+                    name = "dojo" id="dojo"> 
+                    {% for d in dojo_dropdown %}
+                    <option value="{{d.id}}">{{d.name}}</option>
+                    {%endfor%}
+                    </select>   
+                    </div>
+    <div class="form-row">
+                    <input type="submit" name="add_ninja" class="btn btn-success" value="Add Ninja">
+    </div>  
+    </form>
+</div>
+    <div class="row">
+        <ul>
+            {% for d in data %}
+            <li> <strong>{{ d.count}}</strong> ninjas at the <strong> &quot;{{d.name}}&quot;</strong> dojo : <a href="/delete_dojo/{{d.id}}" class="btn btn-danger btn-sm">X</a>
+                <ul>
+                {% for n in d.ninjas %}
+                <li>{{n}}</li>
+                {%endfor%}
+                </ul> 
+            </li>
+            {%endfor%}
+        </ul>
+    </div>
+</body>
+</html>
