@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wall</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    {% load static %}
+    <link rel="stylesheet" href=" {% static 'app/style.css' %}">
+</head>
+<body>
+    <div class="container">
+
+        
+        <header>
+    
+        <h1 id="logo" >CodingDojo Wall</h1>
+
+        {% if user %}
+        <ul >       
+            <li> <a href="#" class="text-info">Hello, {{user.first_name}}</a></li>
+            <li> <a href="#" class="text-info">Log out</a></li>
+        {% else %}
+        <li><a href="/login"  class="text-info">Log In</a></li>
+        </ul>
+        {%endif %}
+       
+        </header> 
+        <div class="row">
+            
+            <form method="POST" action="/messages" id="post" class="col-md-8">
+            {%csrf_token%}
+        <div class="form-group">
+          <label for="exampleFormControlTextarea1">What's on your mind?</label>
+          <textarea class="form-control" name="text" rows="3" cols="100"></textarea>
+          <input type="submit" name="post" class=" btn btn-info form-control">
+        </div>  
+         </form>
+        </div> 
+     {% include "card.html" %}
+    </div> 
+</body>
+</html>

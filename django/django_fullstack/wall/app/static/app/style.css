@@ -1,0 +1,15 @@
+header {
+    display: flex;
+    padding:15px 0
+}
+header ul{
+margin-left: 180px;
+padding-top:20px;
+justify-self:end;
+}
+
+header ul li {
+    display: inline-block;
+    margin-right: 50px; 
+}
+

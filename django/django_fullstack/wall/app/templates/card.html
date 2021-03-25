@@ -1,0 +1,33 @@
+<div class="row">  
+       
+    {% for msg in messages %}
+    <div class="col-8">
+
+    <div class="card">
+        <div class="card-header">  <span class="txt-muted">{{msg.created_at}} ({{msg.created_at  | timesince}} ago) </span> </div>
+        <div class="card-body">
+          <h5 class="card-title">{{msg.user.first_name}} said:</h5>
+          <p class="card-text"><blockquote>{{msg.message}}.</blockquote></p>
+        </div>
+        <div class="card-footer">
+            {% for cmt in msg.comments.all %}
+            <blockquote class="blockquote">
+                <p class="mb-0">{{cmt.comment}}</p>
+                <footer class="blockquote-footer"> {{cmt.user.first_name}} <cite>{{cmt.created_at | timesince}} ago</cite></footer>
+              </blockquote>
+              <hr>
+              {% endfor %}
+              
+          <form method="POST" action="/comments/{{msg.id}}">
+            {%csrf_token%}
+        <div class="form-group">
+          <label for="exampleFormControlTextarea1">What's on your mind?</label>
+          <textarea class="form-control" name="text" rows="3" cols="100"></textarea>    
+          <input type="submit" name="post" value="Comment" class=" btn btn-info form-control">
+        </div>  
+         </form>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+    </div>  
