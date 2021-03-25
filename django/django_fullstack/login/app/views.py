@@ -53,18 +53,18 @@ def register(req:HttpRequest):
         return render(req, "index.html", {"reg": req.POST})
 def success(req):
        user = _current_user(req)
-       messages.add_message(req, messages.INFO, f"Hello {user.first_name} <a href='/logout'>Log Out</a>")
+       if user == None:
+           return redirect("/")
+       messages.add_message(req, messages.INFO, f"Success! Welcome {user.first_name} <a href='/logout'>Log Out</a>")
        return render(req, "success.html", {"user": user})
 
 
 def _current_user(req: HttpRequest):
     if SESSION_VAR_NAME in req.session:
-        u = User.objects.get(id=req.session.get(SESSION_VAR_NAME))
+        return  User.objects.get(id=req.session.get(SESSION_VAR_NAME))
 
-        if u:
-            return u
-    else: 
-        return redirect("/login")
+  
+   
 def _logout(req:HttpRequest):
       if SESSION_VAR_NAME in req.session:
         del req.session[SESSION_VAR_NAME]
