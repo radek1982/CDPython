@@ -8,11 +8,11 @@ SESSION_VAR_NAME="current_user_id"
 def index(req:HttpRequest):
 
 
-    return render(req, "index.html", {"data": req.POST})
+    return render(req, "index.html", {"reg": req.POST})
 def login(req:HttpRequest):
 
     email = req.POST.get("email") 
-    password = req.POST.get(['password'])
+    password = req.POST.get('password')
     print(email, password)
     if email and password:
         u = User.login(email,password)
@@ -23,17 +23,21 @@ def login(req:HttpRequest):
             req.session.save()
             return redirect("/success")
     messages.add_message(req, messages.WARNING, "Invalid login credentials")
-    return redirect("/",)    
+    return render(req, "index.html", {"log": req.POST})  
 def logout(req):
     return _logout(req)
+
+
+
 def register(req:HttpRequest):
-    email = req.POST['email']
-    passwd = req.POST['password']
-    first = req.POST['first_name']
-    last = req.POST['last_name']
+    
 
     errors  = User.objects.validate_registration(req.POST)
     if (len(errors) == 0):
+        email = req.POST['email']
+        passwd = req.POST['password']
+        first = req.POST['first_name']
+        last = req.POST['last_name']
     
         x = User.objects.create(email  = email, first_name = first, last_name = last, password = passwd)
         req.session[SESSION_VAR_NAME] = x.id
@@ -45,8 +49,8 @@ def register(req:HttpRequest):
         
         for m in errors:
      
-            messages.add_message(req, messages.WARNING, f"Errors: {m}")
-        return render(req, "index.html", {"data": req.POST})
+            messages.add_message(req, messages.WARNING, f"{m}")
+        return render(req, "index.html", {"reg": req.POST})
 def success(req):
        user = _current_user(req)
        messages.add_message(req, messages.INFO, f"Hello {user.first_name} <a href='/logout'>Log Out</a>")
